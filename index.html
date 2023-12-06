@@ -30,7 +30,7 @@
 <!-- Confirmation Screen -->
 <section id="confirmation-screen" style="display: none;">
     <h2>Booking Confirmation</h2>
-    <p>Thank you, [Driver Name]! Your booking for Loading Bay [Loading Bay] with a loading volume of [Loading Volume] is confirmed.</p>
+    <p id="confirmation-message"></p>
 </section>
 
 <script>
@@ -39,16 +39,32 @@
         const loadingBay = document.getElementById('loading-bay').value;
         const loadingVolume = document.getElementById('loading-volume').value;
 
-        // Hide booking form
-        document.getElementById('booking-form').style.display = 'none';
-
-        // Show confirmation screen with dynamic content
-        const confirmationScreen = document.getElementById('confirmation-screen');
-        confirmationScreen.style.display = 'block';
-        confirmationScreen.innerHTML = `
-            <h2>Booking Confirmation</h2>
-            <p>Thank you, ${driverName}! Your booking for Loading Bay ${loadingBay} with a loading volume of ${loadingVolume} is confirmed.</p>
-        `;
+        // Make a POST request to the Flask backend
+        fetch('https://your-username.github.io/truck-booking-backend/submit-booking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                driverName,
+                loadingBay,
+                loadingVolume,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display a success message
+            const confirmationScreen = document.getElementById('confirmation-screen');
+            confirmationScreen.style.display = 'block';
+            document.getElementById('booking-form').style.display = 'none';
+            document.getElementById('confirmation-message').innerText =
+                `Thank you, ${driverName}! Your booking for Loading Bay ${loadingBay} with a loading volume of ${loadingVolume} is confirmed.`;
+        })
+        .catch(error => {
+            // Display an error message
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
     }
 </script>
 
