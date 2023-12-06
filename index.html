@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truck Booking Platform</title>
+</head>
+<body>
+
+<!-- Booking Form -->
+<section id="booking-form" style="display: block;">
+    <h2>Truck Booking Form</h2>
+    <form id="truck-booking-form">
+        <label for="driver-name">Driver Name:</label>
+        <input type="text" id="driver-name" name="driver-name" required>
+
+        <label for="loading-bay">Loading Bay:</label>
+        <select id="loading-bay" name="loading-bay" required>
+            <option value="bay1">Bay 1</option>
+            <option value="bay2">Bay 2</option>
+        </select>
+
+        <label for="loading-volume">Loading Volume:</label>
+        <input type="number" id="loading-volume" name="loading-volume" required>
+
+        <button type="button" onclick="submitBooking()">Submit Booking</button>
+    </form>
+</section>
+
+<!-- Confirmation Screen -->
+<section id="confirmation-screen" style="display: none;">
+    <h2>Booking Confirmation</h2>
+    <p>Thank you, [Driver Name]! Your booking for Loading Bay [Loading Bay] with a loading volume of [Loading Volume] is confirmed.</p>
+</section>
+
+<script>
+    function submitBooking() {
+        const driverName = document.getElementById('driver-name').value;
+        const loadingBay = document.getElementById('loading-bay').value;
+        const loadingVolume = document.getElementById('loading-volume').value;
+
+        // Hide booking form
+        document.getElementById('booking-form').style.display = 'none';
+
+        // Show confirmation screen with dynamic content
+        const confirmationScreen = document.getElementById('confirmation-screen');
+        confirmationScreen.style.display = 'block';
+        confirmationScreen.innerHTML = `
+            <h2>Booking Confirmation</h2>
+            <p>Thank you, ${driverName}! Your booking for Loading Bay ${loadingBay} with a loading volume of ${loadingVolume} is confirmed.</p>
+        `;
+    }
+</script>
+
+</body>
+</html>
